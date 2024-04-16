@@ -5,9 +5,9 @@ from utils.models import Account
 from utils.database import create_account, account_exists
 from utils.auth import encrypt_jwt, decrypt_jwt, verify_passw
 import json
+import time
 
 router = APIRouter()
-
 
 @router.get("/")
 async def root_endpoint():
@@ -42,3 +42,8 @@ async def signin_endpoint(account: Account):
                         samesite="lax",
                         httponly=True)
     return response
+
+@router.get("/chats")
+async def get_chats_endpoint():
+    time.sleep(5)
+    return JSONResponse(Messages.OK, status_code=200)

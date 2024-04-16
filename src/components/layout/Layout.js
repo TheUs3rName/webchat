@@ -1,9 +1,13 @@
 import styles from "@/styles/Layout.module.css";
+import Aside from "@/components/mdoule/Aside";
 
-function Layout() {
-  return <div className={styles.container}>
-    
-  </div>;
+function Layout({ children }) {
+  return (
+    <div className={styles.layout}>
+      <Aside />
+      {children}
+    </div>
+  );
 }
 
 export default Layout;
