@@ -1,0 +1,19 @@
+:root {
+  --background-color: #1c1f2c;
+  --chat-background: #323446;
+  --aside-background-color: #6786ff;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+a,
+button {
+  color: inherit;
+}

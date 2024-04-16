@@ -1,0 +1,17 @@
+{
+  "name": "webchat",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbo",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "server": "uvicorn --app-dir server app:app --port 3001 --reload"
+  },
+  "dependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "next": "14.1.4"
+  }
+}
