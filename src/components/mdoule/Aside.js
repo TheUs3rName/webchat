@@ -1,8 +1,10 @@
 import { getChatList } from "@/services/httpClient";
 import styles from "@/styles/Aside.module.css";
 import { useQuery } from "@tanstack/react-query";
-
+import Link from "next/link";
 import { ThreeDots } from "react-loader-spinner";
+
+import { MdAccountCircle } from "react-icons/md";
 
 function Loader() {
   return (
@@ -27,11 +29,15 @@ function Aside() {
     refetchOnWindowFocus: false,
   });
 
-  console.log(isLoading);
   return (
     <div className={styles.aside}>
       <input type="text" placeholder="serach" />
       {isLoading ? <Loader /> : null}
+      <Link href="/profile">
+        <span>
+          <MdAccountCircle />
+        </span>
+      </Link>
     </div>
   );
 }

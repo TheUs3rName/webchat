@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from utils.responses import Messages
 from utils.models import Account
-from utils.database import create_account, account_exists
+from utils.database import create_account, account_exists, get_chat_list
 from utils.auth import encrypt_jwt, decrypt_jwt, verify_passw
 import json
 import time
@@ -39,11 +39,10 @@ async def signin_endpoint(account: Account):
     response.set_cookie(key="token",
                         value=token,
                         max_age=3600,
-                        samesite="lax",
+                        path="/",
                         httponly=True)
     return response
 
 @router.get("/chats")
 async def get_chats_endpoint():
-    time.sleep(5)
-    return JSONResponse(Messages.OK, status_code=200)
+    return JSONResponse(get_chat_list(), status_code=200)

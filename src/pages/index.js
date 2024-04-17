@@ -1,10 +1,10 @@
 import styles from "@/styles/Home.module.css";
 
-
 export default function Home() {
-  return (
-    <div className={styles.main}>
-      <h1>TEST</h1>
-    </div>
-  );
+  return <div className={styles.main}></div>;
+}
+
+export async function getServerSideProps({ req }) {
+  console.log(req.headers);
+  return {props: {}}
 }

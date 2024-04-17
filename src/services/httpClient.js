@@ -1,14 +1,13 @@
 import axios from "axios";
 
-const API_URL = process.env.API_URL;
-console.log("apiurl", API_URL, typeof API_URL);
-const httpClient = axios.create({ baseURL: API_URL });
-
-console.log(httpClient.defaults.baseURL);
+const httpClient = axios.create({
+  baseURL: "http://localhost:3001",
+  withCredentials: true,
+});
 
 httpClient.interceptors.response.use(
   (res) => res.data,
-  (err) => Promise.reject(err)
+  (err) => err
 );
 
 const getChatList = async () => {
@@ -16,5 +15,10 @@ const getChatList = async () => {
   return chatList;
 };
 
-export { getChatList };
+const signIn = async (data) => {
+  const res = await httpClient.post("/auth/signin", data);
+  return res;
+};
+
+export { getChatList, signIn };
 export default httpClient;

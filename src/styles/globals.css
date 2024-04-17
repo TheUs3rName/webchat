@@ -3,7 +3,8 @@
   --chat-background: #323446;
   --aside-background-color: #6786ff;
   --search-bar-color: #1E1F2B;
-  --text-color: #565966
+  --text-color: #565966;
+  --blue-color: #6785FF
 }
 
 * {
@@ -17,5 +18,7 @@ body {
 
 a,
 button {
+  font-family: inherit;
+  text-decoration: none;
   color: inherit;
 }

@@ -10,3 +10,4 @@ class Account(BaseModel):
     last_name: Optional[str] = None
     bio: Optional[str] = None
     created_at: float = Field(default_factory=time.time)
+    chats: list = []
