@@ -2,24 +2,9 @@ import { getChatList } from "@/services/httpClient";
 import styles from "@/styles/Aside.module.css";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { ThreeDots } from "react-loader-spinner";
 
 import { MdAccountCircle } from "react-icons/md";
-
-function Loader() {
-  return (
-    <ThreeDots
-      visible={true}
-      height="80"
-      width="80"
-      color="#1E1F2B"
-      radius="9"
-      ariaLabel="three-dots-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-    />
-  );
-}
+import Loader from "./Loader";
 
 function Aside() {
   const { data, isLoading } = useQuery({

@@ -1,11 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Cookie
 from fastapi.responses import JSONResponse
 from utils.responses import Messages
 from utils.models import Account
 from utils.database import create_account, account_exists, get_chat_list
 from utils.auth import encrypt_jwt, decrypt_jwt, verify_passw
 import json
-import time
 
 router = APIRouter()
 
@@ -46,3 +45,10 @@ async def signin_endpoint(account: Account):
 @router.get("/chats")
 async def get_chats_endpoint():
     return JSONResponse(get_chat_list(), status_code=200)
+
+@router.get("/auth/whoami")
+async def whoami_endpoint(token: str = Cookie(default="")):
+    if (token):
+        info = decrypt_jwt(token)
+        return JSONResponse(info, status_code=200)
+    return JSONResponse(Messages.UNAUTHORIZED, status_code=401)

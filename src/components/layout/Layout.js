@@ -1,5 +1,5 @@
 import styles from "@/styles/Layout.module.css";
-import Aside from "@/components/mdoule/Aside";
+import Aside from "@/components/module/Aside";
 
 function Layout({ children }) {
   return (

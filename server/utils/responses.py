@@ -10,4 +10,5 @@ class Messages(enum.auto):
         "status": "failed",
         "message": "invalid username or password."
     }
+    UNAUTHORIZED = {"status": "failed", "message": "unauthrized."}
     
