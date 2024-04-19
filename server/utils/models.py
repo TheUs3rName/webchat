@@ -11,3 +11,8 @@ class Account(BaseModel):
     bio: Optional[str] = None
     created_at: float = Field(default_factory=time.time)
     chats: list = []
+
+class Chat(BaseModel):
+    name: str
+    owner: str = None
+    

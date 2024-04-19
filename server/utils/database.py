@@ -14,6 +14,7 @@ def get_database_uri():
 
 mongo_client = MongoClient(get_database_uri(), tlsCAFile=certifi.where())
 database = mongo_client[env.get("DB_NAME")]
+
 def account_exists(email):
     filter = {"email": email}
     return database["account"].find_one(filter)
@@ -23,6 +24,9 @@ def create_account(account):
     hashed_passw = hash_passw(account["password"])
     account.update({"password": hashed_passw})
     return database["account"].insert_one(account)
+
+def create_chat(chat):
+    return database["chats"].insert_one(chat)
 
 def get_chat_list():
     data = database["chats"].find()

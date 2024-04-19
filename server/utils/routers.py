@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Cookie
+from fastapi import APIRouter, Cookie, UploadFile, File
 from fastapi.responses import JSONResponse
 from utils.responses import Messages
-from utils.models import Account
-from utils.database import create_account, account_exists, get_chat_list
+from utils.models import Account, Chat
+from utils.database import create_account, account_exists, get_chat_list, create_chat
 from utils.auth import encrypt_jwt, decrypt_jwt, verify_passw
 import json
 
@@ -33,7 +33,8 @@ async def signin_endpoint(account: Account):
     if not is_valid:
         return JSONResponse(Messages.INVALID_CRED, status_code=422)
 
-    token = encrypt_jwt({"email": account.email})
+    token = encrypt_jwt({"email": account.email, "_id": str(exists["_id"])})
+
     response = JSONResponse(Messages.OK, 200)
     response.set_cookie(key="token",
                         value=token,
@@ -47,8 +48,18 @@ async def get_chats_endpoint():
     return JSONResponse(get_chat_list(), status_code=200)
 
 @router.get("/auth/whoami")
-async def whoami_endpoint(token: str = Cookie(default="")):
+async def whoami_endpoint(token: str = Cookie(default=None)):
     if (token):
         info = decrypt_jwt(token)
         return JSONResponse(info, status_code=200)
     return JSONResponse(Messages.UNAUTHORIZED, status_code=401)
+
+@router.post("/chats")
+async def create_chat_endpoint(chat: Chat, token: str = Cookie(default=None)):
+    if not token:
+        return JSONResponse(Messages.UNAUTHORIZED, status_code=401)
+    info = decrypt_jwt(token)
+    ch = json.loads(chat.model_dump_json())
+    ch["owner"] = info["_id"]
+    create_chat(ch)
+    return JSONResponse(Messages.OK, status_code=201)
