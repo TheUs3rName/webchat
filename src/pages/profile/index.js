@@ -12,8 +12,6 @@ function index({ token }) {
     refetchOnWindowFocus: false,
   });
 
-  console.log(isLoading, data);
-
   return <div>profile</div>;
 }
 

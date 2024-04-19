@@ -48,3 +48,65 @@
 .aside span:hover{
     cursor: pointer;
 }
+
+.chat_list {
+    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 270px;
+    height: calc(100vh - 100px);
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.chat_list::-webkit-scrollbar {
+    display: none;
+}
+
+
+.chat_list ul {
+    list-style-type: none;
+}
+
+.chat_list ul li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--search-bar-color);
+    color: var(--text-color);
+}
+
+.chat_list span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.blink {
+    width: 6px;
+    height: 6px;
+    background-color: green;
+    border-radius: 50%;
+    margin: 5px;
+    animation-name: blink;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.chat svg {
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+}
+
+.chat svg:hover {
+    cursor: pointer;
+    background-color: var(--chat-background);
+}
+
+@keyframes blink {
+    50% {opacity: 0;}
+}

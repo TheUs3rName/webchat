@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 import { MdAccountCircle } from "react-icons/md";
+import { FcNext } from "react-icons/fc";
+
 import Loader from "./Loader";
 
 function Aside() {
@@ -17,7 +19,23 @@ function Aside() {
   return (
     <div className={styles.aside}>
       <input type="text" placeholder="serach" />
-      {isLoading ? <Loader /> : null}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <div className={styles.chat_list}>
+          <ul>
+            {data.map((chat) => (
+              <li className={styles.chat} key={chat._id}>
+                <span>
+                  <div className={styles.blink}></div>
+                  <h5>{chat.name}</h5>
+                </span>
+                <FcNext />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <Link href="/profile">
         <span>
           <MdAccountCircle />
