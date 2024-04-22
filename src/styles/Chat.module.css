@@ -1,0 +1,89 @@
+.chat {
+    width: calc(100vw - 80px);
+    height: calc(100vh - 40px);
+    background-color: var(--search-bar-color);
+    margin: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 99%;
+    height: 8%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--chat-background);
+}
+
+.title span {
+    width: 10%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    color: #fcfcfc;
+
+}
+
+.title span svg {
+    width: 50px;
+    height: 50px;
+}
+
+.title span h4 {
+    margin-left: 10px;
+}
+
+.title svg {
+    margin-right: 10px;
+    color: #fcfcfc;
+    
+}
+
+.title svg:hover {
+    cursor: pointer;
+}
+
+.sendMessage {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.sendMessage input {
+    background-color: var(--chat-background);
+    padding: 10px;
+    border-radius: 10px;
+    width: 95%;
+    border: none;
+    height: 30px;
+    color: #fcfcfc;
+}
+
+.sendMessage input:focus {
+    outline: none;
+    cursor: text;
+}
+
+.sendMessage button {
+    background-color: var(--blue-color);
+    border: none;
+    border-radius: 10px;
+    width: 5%;
+    color: #fcfcfc;
+    margin-left: 20px;
+}
+
+.sendMessage button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.sendMessage button:hover {
+    cursor: pointer;
+}
