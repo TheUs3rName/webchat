@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { signUp } from "@/services/httpClient";
 import Loader from "@/components/module/Loader";
 import { useRouter } from "next/navigation";
+import { getCookies } from "@/utils/cookies";
 
 function index() {
   const [email, setEmail] = useState("");
@@ -82,5 +83,11 @@ function index() {
     </div>
   );
 }
-
+export async function getServerSideProps({ req }) {
+  const { token } = getCookies(req);
+  if (token) {
+    return { redirect: { destination: "/", permenant: false } };
+  }
+  return { props: {} };
+}
 export default index;
