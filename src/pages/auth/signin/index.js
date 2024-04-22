@@ -1,6 +1,7 @@
 import Loader from "@/components/module/Loader";
 import { signIn } from "@/services/httpClient";
 import styles from "@/styles/Form.module.css";
+import { getCookies } from "@/utils/cookies";
 import { validateEmail, validatePassw } from "@/utils/formValidator";
 import {
   INVALID_EMAIL,
@@ -76,4 +77,11 @@ function index() {
   );
 }
 
+export async function getServerSideProps({ req }) {
+  const { token } = getCookies(req);
+  if (token) {
+    return { redirect: { destination: "/", permenant: false } };
+  }
+  return { props: {} };
+}
 export default index;
