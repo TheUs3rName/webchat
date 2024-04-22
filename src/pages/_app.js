@@ -13,12 +13,11 @@ export default function App({ Component, pageProps }) {
     <>
       <div className={inter.className}>
         <QueryClientProvider client={client}>
-          <Layout>
-            <Provider store={store}>
+          <Provider store={store}>
+            <Layout>
               <Component {...pageProps} />
-              
-            </Provider>
-          </Layout>
+            </Layout>
+          </Provider>
         </QueryClientProvider>
       </div>
     </>
