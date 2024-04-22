@@ -4,4 +4,24 @@
     background-color: var(--chat-background);
     margin: 20px;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: var(--search-bar-color);
+    color: #fcfcfc;
+}
+
+.section svg {
+    margin-left: 5px;
+    padding: 8px;
+    border-radius: 50%; 
+    background-color: var(--chat-background);
 }
