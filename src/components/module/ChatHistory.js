@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/Chat.module.css";
+import { useRouter } from "next/router";
+import { getReadyState } from "@/utils/webSocket";
+import useWebSocket from "react-use-websocket";
 
 function ChatHistory() {
   const [chatHistory, setChatHistory] = useState([]);
+  const { chatId } = useRouter().query;
 
   function handleScroll() {
     if (
