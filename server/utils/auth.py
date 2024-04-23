@@ -4,7 +4,6 @@ from dotenv import dotenv_values
 
 env = dotenv_values(".env")
 
-
 def hash_passw(password):
     return md5(password.encode()).hexdigest()
 
@@ -21,3 +20,5 @@ def encrypt_jwt(payload):
 def decrypt_jwt(token):
     decoded = jwt.decode(token, env.get("SECRET"), algorithms=["HS256"])
     return decoded
+
+

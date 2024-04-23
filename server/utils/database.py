@@ -2,7 +2,8 @@ import certifi
 from dotenv import dotenv_values
 import urllib
 from pymongo import MongoClient
-from utils.auth import hash_passw, verify_passw
+from bson.objectid import ObjectId
+from utils.auth import hash_passw, verify_passw, decrypt_jwt
 
 env = dotenv_values(".env")
 
@@ -28,6 +29,12 @@ def create_account(account):
 def create_chat(chat):
     return database["chats"].insert_one(chat)
 
+def chat_exists(_id):
+    filter = {
+        "_id": ObjectId(_id)
+    }
+    return database["chats"].find_one(filter)
+
 def get_chat_list():
     data = database["chats"].find()
     chat_list = []
@@ -37,3 +44,7 @@ def get_chat_list():
         chat.update({"_id": str(_id)})
         chat_list.append(chat)
     return chat_list
+
+def verify_token(token):
+    info = decrypt_jwt(token)
+    return account_exists(info["email"])
