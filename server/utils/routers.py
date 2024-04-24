@@ -2,7 +2,7 @@ from fastapi import APIRouter, Cookie, UploadFile, File, WebSocket, WebSocketDis
 from fastapi.responses import JSONResponse
 from utils.responses import Messages
 from utils.models import Account, Chat
-from utils.database import verify_token , chat_exists, create_account, account_exists, get_chat_list, create_chat
+from utils.database import add_chat_history, verify_token , chat_exists, create_account, account_exists, get_chat_list, create_chat
 from utils.auth import encrypt_jwt, decrypt_jwt, verify_passw
 import json
 from typing import List
@@ -25,12 +25,13 @@ class ConnectionManager:
 
     async def broadcast(self, message: dict):
         for connection in self.active_connections:
-            await connection.send_json(message)
+            try: await connection.send_json(message)
+            except Exception as e:
+                self.active_connections.remove(connection)
 
 @router.get("/")
 async def root_endpoint():
     return JSONResponse(Messages.OK, status_code=200)
-
 
 @router.post("/auth/signup")
 async def signup_endpoint(account: Account):
@@ -40,7 +41,6 @@ async def signup_endpoint(account: Account):
     acc = json.loads(account.model_dump_json())
     create_account(acc)
     return JSONResponse(Messages.CREATED, status_code=201)
-
 
 @router.post("/auth/signin")
 async def signin_endpoint(account: Account):
@@ -66,6 +66,13 @@ async def signin_endpoint(account: Account):
 async def get_chats_endpoint():
     return JSONResponse(get_chat_list(), status_code=200)
 
+@router.get("/chats/{chat_ids}")
+async def chat_detail_endpoint(chat_ids: str):
+    data = chat_exists(chat_ids)
+    if data:
+        return JSONResponse(data, status_code=200)
+    return JSONResponse(Messages.NOT_FOUND, status_code=422)
+
 @router.get("/auth/whoami")
 async def whoami_endpoint(token: str = Cookie(default=None)):
     if (verify_token(token)):
@@ -83,7 +90,6 @@ async def create_chat_endpoint(chat: Chat, token: str = Cookie(default=None)):
     create_chat(ch)
     return JSONResponse(Messages.OK, status_code=201)
 
-
 manager = ConnectionManager()
 
 @router.websocket("/ws/chats/{chat_ids}")
@@ -100,12 +106,9 @@ async def ws_chats_endpoint(chat_ids: str, ws: WebSocket, token: str = Cookie(de
 
     while True:
         try:
-            data = await ws.receive_json()
-            print("data:", data, type(data))
-            action = data.get("action", False)
-            if action and action == "ping":
-                await ws.send_json({"action": "pong"})
-
-            await manager.broadcast(data)
+            message = await ws.receive_json()
+            if message["action"] == "message":
+                print(add_chat_history(message))
+            await manager.broadcast(message)
         except WebSocketException as e:
             print(e)
