@@ -9,3 +9,4 @@ class Messages:
     }
     UNAUTHORIZED = {"status": "failed", "message": "unauthrized."}
     INVALID_REQ = {"status": "failed", "message": "invalid request."}
+    NOT_FOUND = {"status": "failed", "message": "not found"}

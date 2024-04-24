@@ -14,5 +14,6 @@ class Account(BaseModel):
 
 class Chat(BaseModel):
     name: str
+    history: list = []
     owner: str = None
     
