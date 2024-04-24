@@ -30,5 +30,10 @@ const whoAmI = async () => {
   return res;
 };
 
-export { getChatList, signIn, signUp, whoAmI };
+const chatExists = async (_id) => {
+  const res = httpClient.get(`/chats/${_id}`);
+  return res;
+};
+
+export { getChatList, signIn, signUp, whoAmI, chatExists };
 export default httpClient;

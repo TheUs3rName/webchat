@@ -11,4 +11,6 @@ const getReadyState = (state) => {
   return readyState;
 };
 
-export { getReadyState };
+const ConnectionReady = (state) => getReadyState(state) === "Open";
+
+export { getReadyState, ConnectionReady };

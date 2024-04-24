@@ -5,11 +5,18 @@
     margin: 20px;
     border-radius: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.section {
+.main h3 {
+    color: #fcfcfc;
+    margin: 20px;
+}
+
+.section__1 {
+    width: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,9 +26,30 @@
     color: #fcfcfc;
 }
 
-.section svg {
+.section__1 svg {
+    color: var(--fc-next-color);
     margin-left: 5px;
     padding: 8px;
     border-radius: 50%; 
     background-color: var(--chat-background);
 }
+
+.section__2 {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 30px;
+    background-color: var(--search-bar-color);
+    color: #fcfcfc;
+}
+
+.section__2 svg {
+    color: var(--fc-next-color);
+    margin-left: 5px;
+    padding: 8px;
+    border-radius: 50%; 
+    background-color: var(--chat-background);
+}
+

@@ -4,7 +4,8 @@
   --aside-background-color: #6786ff;
   --search-bar-color: #1E1F2B;
   --text-color: #565966;
-  --blue-color: #6785FF
+  --blue-color: #6785FF;
+  --fc-next-color: rgb(33, 150, 243);
 }
 
 * {

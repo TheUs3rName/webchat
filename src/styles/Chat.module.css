@@ -71,6 +71,9 @@
 }
 
 .sendMessage button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: var(--blue-color);
     border: none;
     border-radius: 10px;
@@ -87,3 +90,4 @@
 .sendMessage button:hover {
     cursor: pointer;
 }
+

@@ -38,13 +38,8 @@
 .aside span {
     width: 300px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    
-}
-
-.aside span:hover{
-    cursor: pointer;
 }
 
 .chat_list {

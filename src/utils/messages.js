@@ -4,6 +4,7 @@ const SIGNIN_SUCCESS = "Successfully signed in.";
 const SIGNUP_SUCCESS = "Successfully signed up.";
 const DONT_MATCH = "Passwords doesn't match !";
 const POS = "top-right";
+const EMPTY_MESSAGE = "Can't send empty message!"
 
 export {
   INVALID_EMAIL,
@@ -12,4 +13,5 @@ export {
   SIGNUP_SUCCESS,
   DONT_MATCH,
   POS,
+  EMPTY_MESSAGE
 };
