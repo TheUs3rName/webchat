@@ -4,9 +4,11 @@ import { useRouter } from "next/router";
 import { getReadyState } from "@/utils/webSocket";
 import useWebSocket from "react-use-websocket";
 
-function ChatHistory() {
+function ChatHistory({ ws }) {
   const [chatHistory, setChatHistory] = useState([]);
   const { chatId } = useRouter().query;
+
+  const { sendJsonMessage, lastJsonMessage, readyState } = ws;
 
   function handleScroll() {
     if (
@@ -19,10 +21,15 @@ function ChatHistory() {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
+    setChatHistory(lastJsonMessage?.history)
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return <div className={styles.history}>chat history here</div>;
+  return (
+    <div className={styles.history}>
+      {!!chatHistory?.length ? <p>chat history</p> : <p>nothing here..</p>}
+    </div>
+  );
 }
 
 export default ChatHistory;

@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { MdAccountCircle } from "react-icons/md";
 import { FcNext } from "react-icons/fc";
+import { FaPlus } from "react-icons/fa6";
 
 import Loader from "./Loader";
 import { useRouter } from "next/navigation";
@@ -68,11 +69,13 @@ function Aside() {
           </ul>
         </div>
       )}
-      <Link href="/profile">
-        <span>
+
+      <span>
+        <Link href="/profile">
           <MdAccountCircle />
-        </span>
-      </Link>
+        </Link>
+      </span>
+
     </div>
   );
 }
