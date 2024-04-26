@@ -30,7 +30,10 @@ def create_account(account):
     return database["account"].insert_one(account)
 
 def create_chat(chat):
-    return database["chats"].insert_one(chat)
+    result =  database["chats"].insert_one(chat)
+    new_chat = {"name": chat["name"], "_id": str(result.inserted_id)}
+    return new_chat
+
 
 def chat_exists(_id):
     try:
@@ -53,12 +56,13 @@ def get_chat_list():
     return chat_list
 
 def verify_token(token):
-    info = decrypt_jwt(token)
-    return account_exists(info["email"])
+    try: info = decrypt_jwt(token)
+    except: info = {}
+    return account_exists(info.get("email", None))
 
 def add_chat_history(message):
     filter = {
-        "_id": message["chat"],
+        "_id": ObjectId(message["chat"]),
     }
     update = {
         "$push": {
