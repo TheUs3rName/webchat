@@ -6,4 +6,8 @@ const validatePassw = (passw) => {
   return passw.length >= 8 ? true : false;
 };
 
-export { validateEmail, validatePassw };
+const validateName = (name) => {
+  return name.length >= 5 ? true : false;
+};
+
+export { validateEmail, validatePassw, validateName };
