@@ -55,7 +55,6 @@ function index() {
 
   return (
     <div className={styles.container}>
-      <Toaster />
       <div className={styles.main}>
         <h3>Sign up</h3>
         <input
