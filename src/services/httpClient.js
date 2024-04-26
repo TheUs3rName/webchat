@@ -25,8 +25,8 @@ const signUp = async (data) => {
   return res;
 };
 
-const whoAmI = async () => {
-  const res = httpClient.get("/auth/whoami");
+const whoAmI = async (token) => {
+  const res = await httpClient.get("/auth/whoami", {headers: {Cookie: `token=${token};`}})
   return res;
 };
 
@@ -35,5 +35,10 @@ const chatExists = async (_id) => {
   return res;
 };
 
-export { getChatList, signIn, signUp, whoAmI, chatExists };
+const createChat = async (data) => {
+  const res = httpClient.post("/chats", data);
+  return res;
+};
+
+export { getChatList, signIn, signUp, whoAmI, chatExists, createChat };
 export default httpClient;
