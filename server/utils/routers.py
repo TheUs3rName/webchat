@@ -87,8 +87,10 @@ async def create_chat_endpoint(chat: Chat, token: str = Cookie(default=None)):
     info = decrypt_jwt(token)
     ch = json.loads(chat.model_dump_json())
     ch["owner"] = info["_id"]
-    create_chat(ch)
-    return JSONResponse(Messages.OK, status_code=201)
+    new_chat = create_chat(ch)
+    new_chat.update({"status": "OK"})
+    new_chat.update({"owner": info["_id"]})
+    return JSONResponse(new_chat, status_code=201)
 
 manager = ConnectionManager()
 
@@ -102,13 +104,25 @@ async def ws_chats_endpoint(chat_ids: str, ws: WebSocket, token: str = Cookie(de
     if not chat_exists(chat_ids):
         await ws.close(reason="chat not found.")
 
-    await manager.send_personal_message({"history": []}, ws)
+    chat = chat_exists(chat_ids)
+    chat_history = iter(chat["history"])
+    history_list = []
+
+    while 1:
+        try:
+            for _ in range(50):
+                history_list.append(next(chat_history))
+            await manager.send_personal_message({"history": history_list}, ws)
+            history_list = []
+        except StopIteration: 
+            await manager.send_personal_message({"history": history_list}, ws)
+            break
 
     while True:
         try:
             message = await ws.receive_json()
             if message["action"] == "message":
-                print(add_chat_history(message))
+                add_chat_history(message)
             await manager.broadcast(message)
         except WebSocketException as e:
-            print(e)
+            print("error occurted.")
