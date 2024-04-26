@@ -57,7 +57,7 @@ function index({ token, whoami }) {
     e.key === "Enter" && sendHandler();
   };
 
-  const ws = useWebSocket(`ws://localhost:3001/ws/chats/${chatId}`, {
+  const ws = useWebSocket(`ws://127.0.0.1:8000/api/ws/chats/${chatId}`, {
     heartbeat: {
       message: `{"action": "ping"}`,
       returnMessage: `{"action": "pong"}`,

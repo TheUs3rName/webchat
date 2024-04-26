@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const httpClient = axios.create({
-  baseURL: "http://localhost:3001",
   withCredentials: true,
 });
 
@@ -11,32 +10,32 @@ httpClient.interceptors.response.use(
 );
 
 const getChatList = async () => {
-  const chatList = await httpClient.get("/chats");
+  const chatList = await httpClient.get("/api/chats");
   return chatList;
 };
 
 const signIn = async (data) => {
-  const res = await httpClient.post("/auth/signin", data);
+  const res = await httpClient.post("/api/auth/signin", data);
   return res;
 };
 
 const signUp = async (data) => {
-  const res = httpClient.post("/auth/signup", data);
+  const res = httpClient.post("/api/auth/signup", data);
   return res;
 };
 
 const whoAmI = async (token) => {
-  const res = await httpClient.get("/auth/whoami", {headers: {Cookie: `token=${token};`}})
+  const res = await httpClient.get("/api/auth/whoami", {headers: {Cookie: `token=${token};`}})
   return res;
 };
 
 const chatExists = async (_id) => {
-  const res = httpClient.get(`/chats/${_id}`);
+  const res = httpClient.get(`/api/chats/${_id}`);
   return res;
 };
 
 const createChat = async (data) => {
-  const res = httpClient.post("/chats", data);
+  const res = httpClient.post("/api/chats", data);
   return res;
 };
 
