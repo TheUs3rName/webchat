@@ -91,3 +91,60 @@
     cursor: pointer;
 }
 
+.history {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 100%;
+    overflow-x: scroll;
+}
+
+.sender, .receiver {
+    width: 100%;  
+    display: flex;
+    flex-direction: column;
+    color: #fcfcfc;
+}
+
+.sender {
+    align-items: flex-end;
+    
+}
+
+.sender span {
+    width: 40%;
+    background-color: var(--blue-color);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 3px;
+    text-align: right;
+}
+
+.sender__timestamp {
+    margin: 5px;
+    text-align: left;
+}
+
+.receiver span {
+    width: 40%;
+    background-color: var(--chat-background);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 3px;
+    text-align: left;
+}
+
+.receiver__timestamp {
+    margin: 5px;
+    text-align: right;
+}
+
+
+
+
+
+
+
+
+
+
