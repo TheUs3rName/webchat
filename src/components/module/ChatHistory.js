@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "@/styles/Chat.module.css";
 import { useRouter } from "next/router";
-import { getReadyState } from "@/utils/webSocket";
-import useWebSocket from "react-use-websocket";
+import Loader from "./Loader";
 
-function ChatHistory({ ws }) {
-  const [chatHistory, setChatHistory] = useState([]);
+function ChatHistory({ ws, history, setHistory, whoami }) {
   const { chatId } = useRouter().query;
-
   const { sendJsonMessage, lastJsonMessage, readyState } = ws;
+
+  useEffect(() => {
+    if (lastJsonMessage?.history) {
+      setHistory((history) => [...history, ...lastJsonMessage.history]);
+    }
+  }, [lastJsonMessage]);
 
   function handleScroll() {
     if (
@@ -21,13 +24,38 @@ function ChatHistory({ ws }) {
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    setChatHistory(lastJsonMessage?.history)
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className={styles.history}>
-      {!!chatHistory?.length ? <p>chat history</p> : <p>nothing here..</p>}
+      {!!history.length ? (
+        history.map((m) => (
+          <div
+            className={
+              m.message.from_user.email === whoami.email
+                ? styles.sender
+                : styles.receiver
+            }
+            key={m.id}
+          >
+            <span>
+              <p>{m.message.text}</p>
+              <p
+                className={
+                  m.message.from_user.email === whoami.email
+                    ? styles.sender__timestamp
+                    : styles.receiver__timestamp
+                }
+              >
+                {new Date(+m.date).getHours()}:{new Date(+m.date).getMinutes()}
+              </p>
+            </span>
+          </div>
+        ))
+      ) : (
+        <h5>Nothing here.</h5>
+      )}
     </div>
   );
 }
