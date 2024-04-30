@@ -11,6 +11,7 @@ class Account(BaseModel):
     bio: Optional[str] = None
     created_at: float = Field(default_factory=time.time)
     chats: list = []
+    profile_img: str = None
 
 class Chat(BaseModel):
     name: str
