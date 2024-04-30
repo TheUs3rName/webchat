@@ -2,7 +2,7 @@ from fastapi import APIRouter, Cookie, UploadFile, File, WebSocket, WebSocketDis
 from fastapi.responses import JSONResponse
 from utils.responses import Messages
 from utils.models import Account, Chat
-from utils.database import add_chat_history, verify_token , chat_exists, create_account, account_exists, get_chat_list, create_chat
+from utils.database import add_chat_history, add_chat_to_account, verify_token , chat_exists, create_account, account_exists, get_chat_list, create_chat
 from utils.auth import encrypt_jwt, decrypt_jwt, verify_passw
 import json
 from typing import List
@@ -77,7 +77,9 @@ async def chat_detail_endpoint(chat_ids: str):
 async def whoami_endpoint(token: str = Cookie(default=None)):
     if (verify_token(token)):
         info = decrypt_jwt(token)
-        return JSONResponse(info, status_code=200)
+        exists = account_exists(info["email"])
+        exists.update({"_id": str(exists["_id"])})
+        return JSONResponse(exists, status_code=200)
     return JSONResponse(Messages.UNAUTHORIZED, status_code=401)
 
 @router.post("/chats")
@@ -88,8 +90,9 @@ async def create_chat_endpoint(chat: Chat, token: str = Cookie(default=None)):
     ch = json.loads(chat.model_dump_json())
     ch["owner"] = info["_id"]
     new_chat = create_chat(ch)
-    new_chat.update({"status": "OK"})
     new_chat.update({"owner": info["_id"]})
+    add_chat_to_account(info["_id"], new_chat)
+    new_chat.update({"status": "OK"})
     return JSONResponse(new_chat, status_code=201)
 
 manager = ConnectionManager()
@@ -124,5 +127,5 @@ async def ws_chats_endpoint(chat_ids: str, ws: WebSocket, token: str = Cookie(de
             if message["action"] == "message":
                 add_chat_history(message)
             await manager.broadcast(message)
-        except WebSocketException as e:
-            print("error occurted.")
+        except:
+            break
