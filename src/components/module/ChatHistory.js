@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "@/styles/Chat.module.css";
 import { useRouter } from "next/router";
-import Loader from "./Loader";
 
 function ChatHistory({ ws, history, setHistory, whoami }) {
   const { chatId } = useRouter().query;
@@ -12,20 +11,6 @@ function ChatHistory({ ws, history, setHistory, whoami }) {
       setHistory((history) => [...history, ...lastJsonMessage.history]);
     }
   }, [lastJsonMessage]);
-
-  function handleScroll() {
-    if (
-      window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight
-    )
-      return;
-    console.log("Fetch more list items!");
-  }
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <div className={styles.history}>
@@ -54,7 +39,7 @@ function ChatHistory({ ws, history, setHistory, whoami }) {
           </div>
         ))
       ) : (
-        <h5>Nothing here.</h5>
+        <h5>No Messages here yet.</h5>
       )}
     </div>
   );
