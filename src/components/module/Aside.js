@@ -75,7 +75,6 @@ function Aside() {
           <MdAccountCircle />
         </Link>
       </span>
-
     </div>
   );
 }
