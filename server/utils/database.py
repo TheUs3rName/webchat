@@ -34,6 +34,14 @@ def create_chat(chat):
     new_chat = {"name": chat["name"], "_id": str(result.inserted_id)}
     return new_chat
 
+def add_chat_to_account(_id, chat):
+    filter = {
+        "_id": ObjectId(_id),
+    }
+    update = {
+        "$push": {"chats": chat}
+    }
+    return database["account"].update_one(filter, update)
 
 def chat_exists(_id):
     try:
