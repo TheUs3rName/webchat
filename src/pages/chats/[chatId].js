@@ -1,5 +1,5 @@
 import { getCookies } from "@/utils/cookies";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "@/styles/Chat.module.css";
 import ChatHistory from "@/components/module/ChatHistory";
 import { MdAccountCircle } from "react-icons/md";
@@ -22,6 +22,10 @@ function index({ token, whoami }) {
   const { chatId } = useRouter().query;
   const selectedChat = chats.find((c) => c._id === chatId);
   const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    setHistory([]);
+  }, [chatId]);
 
   const newMessageHandler = (m) => {
     const data = JSON.parse(m.data);
@@ -57,7 +61,7 @@ function index({ token, whoami }) {
     e.key === "Enter" && sendHandler();
   };
 
-  const ws = useWebSocket(`ws://127.0.0.1:8000/api/ws/chats/${chatId}`, {
+  const ws = useWebSocket(`ws://localhost:3001/ws/chats/${chatId}`, {
     heartbeat: {
       message: `{"action": "ping"}`,
       returnMessage: `{"action": "pong"}`,
